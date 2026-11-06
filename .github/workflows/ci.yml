@@ -1,0 +1,21 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  test-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4          # 소스코드 체크아웃 액션 부품 사용
+      - name: Run Test
+        run: |
+          echo "테스트 가동"
+          # 의도적 실패 유발 시: exit 1
+
+  deploy-stage:
+    runs-on: ubuntu-latest
+    needs: test-stage                      # 락(Lock) 장치: test-stage 성공 시에만 기동
+    steps:
+      - name: Run Deploy
+        run: echo "배포 완료"
